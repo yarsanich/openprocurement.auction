@@ -46,6 +46,8 @@ from yaml import load
 from .design import endDate_view, startDate_view, PreAnnounce_view
 from .utils import do_until_success
 
+from pkg_resources import iter_entry_points
+
 SIMPLE_AUCTION_TYPE = 0
 SINGLE_LOT_AUCTION_TYPE = 1
 
@@ -70,6 +72,11 @@ class AuctionsDataBridge(object):
         )
         self.db = Database(self.couch_url,
                            session=Session(retry_delays=range(10)))
+
+        # XXX TODO move to separate module or class 
+
+        for entry_point in iter_entry_points('openprocurement.auction.plugins'):
+            entry_point.load()
 
     def config_get(self, name):
         return self.config.get('main').get(name)
@@ -199,6 +206,7 @@ class AuctionsDataBridge(object):
         #     sleep(1)
         # logger.info("Re-planning auctions finished",
         #             extra={'MESSAGE_ID': DATA_BRIDGE_RE_PLANNING_FINISHED})
+
 
 
 def main():

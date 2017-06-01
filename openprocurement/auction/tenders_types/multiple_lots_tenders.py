@@ -1,5 +1,4 @@
 import logging
-import copy
 import sys
 from ..templates import prepare_service_stage
 from ..utils import calculate_hash
@@ -8,14 +7,14 @@ from ..utils import (
     get_latest_bid_for_bidder,
     make_request
 )
-from ..systemd_msgs_ids import(
+from ..systemd_msgs_ids import (
     AUCTION_WORKER_API_AUCTION_CANCEL,
     AUCTION_WORKER_API_AUCTION_NOT_EXIST,
     AUCTION_WORKER_SERVICE_NUMBER_OF_BIDS,
     AUCTION_WORKER_API_APPROVED_DATA,
     AUCTION_WORKER_SET_AUCTION_URLS
 )
-from barbecue import calculate_coeficient, cooking
+from barbecue import calculate_coeficient
 
 MULTILINGUAL_FIELDS = ['title', 'description']
 ADDITIONAL_LANGUAGES = ['ru', 'en']

@@ -53,6 +53,7 @@ setup(name='openprocurement.auction',
           'openprocurement_client',
           'python-consul',
           'retrying',
+          'reg',
       ],
       extras_require={
           'test': [
@@ -73,6 +74,10 @@ setup(name='openprocurement.auction',
           ],
           'paste.app_factory': [
               'auctions_server = openprocurement.auction.auctions_server:make_auctions_app',
-          ]
+          ],
+          'openprocurement.auction.plugins': [
+              'simple_tender = openprocurement.auction.databridge:AuctionsDataBridge',
+              'multiple_lots_tender = openprocurement.auction.databridge:AuctionsDataBridge',
+          ],
       },
       )
