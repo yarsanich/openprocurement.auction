@@ -1,5 +1,6 @@
 from gevent import monkey
 monkey.patch_all()
+from openprocurement_client.sync import get_resource_items
 
 try:
     import urllib3.contrib.pyopenssl
@@ -24,7 +25,6 @@ from openprocurement.auction.utils import FeedItem
 
 from openprocurement.auction.systemd_msgs_ids import\
     DATA_BRIDGE_PLANNING_DATA_SYNC, DATA_BRIDGE_PLANNING_START_BRIDGE
-from openprocurement_client.sync import get_tenders
 from openprocurement.auction.design import sync_design
 
 
@@ -37,10 +37,15 @@ class AuctionsDataBridge(object):
 
     """Auctions Data Bridge"""
 
-    def __init__(self, config, re_planning=False, debug=False):
+    def __init__(self,
+                 config,
+                 re_planning=False,
+                 debug=False,
+                 activate=False):
         super(AuctionsDataBridge, self).__init__()
         self.config = config
-        self.tenders_ids_list = []
+        self.resource_ids_list = []
+        self.activate = activate
         self.tz = tzlocal()
         self.debug = debug
         self.mapper = components.qA(self, IAuctionsManager)
